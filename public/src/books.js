@@ -7,19 +7,19 @@ function findBookById(books, id) {
 }
 
 function partitionBooksByBorrowedStatus(books) {
-  
-  //pull array of books currently checked out
-  const booksOut = books.filter((book) => {
-      return !book.borrows[0].returned;
-  });
-  
-  //pull array of books currently checked in
-  const booksIn = books.filter((book) => {
-   return book.borrows[0].returned;
-    
-  });
-  //combine arrays
-  return [booksOut, booksIn];
+ // Helper function
+ function isBorrowed(book) {
+  return !book.borrows[0].returned;
+}
+
+//array of checked out
+const booksOut = books.filter(isBorrowed);
+
+//array of checked in
+const booksIn = books.filter((book) => !isBorrowed(book));
+
+// Combine arrays
+return [booksOut, booksIn];
 }
 
 function getBorrowersForBook(book, accounts) {
